@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accountant Fee Portal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a2e5e6c29c.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background: linear-gradient(to right, #f8fafc, #edf2f7);
+    }
+  </style>
+</head>
+<body class="font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <i class="fas fa-university text-3xl"></i>
+        <div>
+          <h1 class="text-2xl font-bold">Global Institute of Engineering and Technology</h1>
+          <p class="text-sm">Accountant Fee Management Panel</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-sm">Logged in as</p>
+        <p class="font-semibold">Admin ID: ACC12345</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- Form Card -->
+  <main class="max-w-3xl mx-auto mt-10 bg-white rounded-xl shadow-lg p-8 space-y-6">
+    <h2 class="text-2xl font-semibold text-blue-700 flex items-center gap-2 mb-4">
+      <i class="fas fa-file-invoice-dollar text-blue-600"></i>
+      Student Fee Collection Form
+    </h2>
+
+    <!-- Form -->
+    <form class="space-y-6" id="feeForm">
+      <!-- Student Info -->
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Student Name</label>
+          <input type="text" class="w-full border rounded-lg px-4 py-2" placeholder="Deepika Singh" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Student ID</label>
+          <input type="text" class="w-full border rounded-lg px-4 py-2" placeholder="EU2025001" />
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium mb-1">Course</label>
+          <input type="text" class="w-full border rounded-lg px-4 py-2" placeholder="BCA" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Semester</label>
+          <select class="w-full border rounded-lg px-4 py-2">
+            <option>Semester 1</option>
+            <option>Semester 2</option>
+            <option>Semester 3</option>
+            <option>Semester 4</option>
+            <option>Semester 5</option>
+            <option>Semester 6</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Fee Categories -->
+      <div>
+        <label class="block text-sm font-semibold mb-2">Select Fee Categories:</label>
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <label class="flex items-center gap-2">
+            <input type="checkbox" id="semCheck" onchange="toggleFeeInput('sem')">
+            Semester Fee
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" id="hostelCheck" onchange="toggleFeeInput('hostel')">
+            Hostel Fee
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" id="transportCheck" onchange="toggleFeeInput('transport')">
+            Transport Fee
+          </label>
+          <label class="flex items-center gap-2">
+            <input type="checkbox" id="otherCheck" onchange="toggleFeeInput('other')">
+            Other Charges
+          </label>
+        </div>
+      </div>
+
+      <!-- Fee Inputs -->
+      <div id="semInput" class="hidden">
+        <label class="block text-sm mt-3 mb-1">Semester Fee (₹)</label>
+        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 120000" />
+      </div>
+
+      <div id="hostelInput" class="hidden">
+        <label class="block text-sm mt-3 mb-1">Hostel Fee (₹)</label>
+        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 60000" />
+      </div>
+
+      <div id="transportInput" class="hidden">
+        <label class="block text-sm mt-3 mb-1">Transport Fee (₹)</label>
+        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 30000" />
+      </div>
+
+      <div id="otherInput" class="hidden">
+        <label class="block text-sm mt-3 mb-1">Other Charges (₹)</label>
+        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 1500" />
+      </div>
+
+      <!-- Payment Method -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Payment Method</label>
+        <select class="w-full border rounded-lg px-4 py-2">
+          <option>Cash</option>
+          <option>Credit / Debit Card</option>
+          <option>UPI</option>
+          <option>Bank Transfer</option>
+        </select>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-right">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 hover:scale-105 transition-transform duration-300 shadow">
+          <i class="fas fa-check-circle mr-2"></i> Submit Payment
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-sm text-gray-500 mt-10 py-6">
+    &copy; 2025 Global Institute of Engineering and Technology — Fee Module for Accountants
+  </footer>
+
+  <!-- JS: Toggle fee inputs -->
+  <script>
+    function toggleFeeInput(type) {
+      const input = document.getElementById(type + 'Input');
+      const check = document.getElementById(type + 'Check');
+      input.classList.toggle('hidden', !check.checked);
+    }
+  </script>
+
+</body>
+</html>
+

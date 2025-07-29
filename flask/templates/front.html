@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>College Fee Portal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-blue-800 text-white p-4 fixed w-full top-0 shadow z-10">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Global Institute of Engineering and Technology</h1>
+      <nav class="space-x-4">
+        <a href="#login" class="hover:underline">Login</a>
+        <a href="#important-info" class="hover:underline">Important Info</a>
+        <a href="#features" class="hover:underline">Features</a>
+        <a href="#contact" class="hover:underline">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Login Section -->
+  <section id="login" class="relative min-h-screen bg-cover bg-center mt-16" style="background-image: url('https://www.brookings.edu/wp-content/uploads/2023/06/2023-05-24T101641Z_2_LYNXMPEJ4N0DY_RTROPTP_4_USA-RACE-PLAYERS-1.jpg?quality=75&w=1500');">
+    <div class="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex flex-col items-center justify-center px-4 text-white text-center space-y-8">
+      <div>
+        <h1 class="text-4xl font-extrabold">Welcome to the College Fee Portal</h1>
+        <h1 class="text-4xl font-extrabold">Global Institute of Engineering and Technology</h1>
+        <p class="text-lg mt-2">"Empowering Minds, Enriching Futures"</p>
+      </div>
+      <div class="bg-white bg-opacity-80 backdrop-blur-md p-10 rounded-xl shadow-xl w-full max-w-md text-gray-900">
+        <h2 class="text-3xl font-extrabold text-center mb-2">Login</h2>
+        <p class="text-center text-gray-700 mb-6">Access your dashboard</p>
+        <form>
+          <div class="mb-4 text-left">
+            <label class="block text-gray-800 font-medium mb-1">Email / ID</label>
+            <input type="text" placeholder="you@example.com" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div class="mb-4 text-left">
+            <label class="block text-gray-800 font-medium mb-1">Password</label>
+            <input type="password" placeholder="••••••••" class="w-full px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div class="flex justify-between items-center mb-4 text-sm">
+            <span></span>
+            <a href="#" class="text-blue-700 hover:underline">Forgot Password?</a>
+          </div>
+          <button type="submit" class="w-full bg-blue-700 text-white font-semibold py-2 rounded hover:bg-blue-800 transition">Login</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Important Information -->
+  <section id="important-info" class="bg-gray-100 py-16">
+    <div class="max-w-7xl mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center text-blue-900 mb-2">Important Information</h2>
+      <p class="text-center text-gray-600 mb-10">Everything you need to know about using the Fee Portal</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-lg font-bold text-blue-800 mb-4">Payment Methods</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>Credit & Debit Cards</li>
+            <li>Net Banking</li>
+            <li>UPI Payments</li>
+            <li>Digital Wallets</li>
+            <li>NEFT/RTGS Transfer</li>
+          </ul>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-lg font-bold text-blue-800 mb-4">Fee Categories</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>Tuition Fees</li>
+            <li>Lab & Library Fees</li>
+            <li>Hostel & Mess</li>
+            <li>Development & Exam Fees</li>
+          </ul>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-lg font-bold text-blue-800 mb-4">Payment Schedule</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>Semester 1: July 15th</li>
+            <li>Semester 2: December 15th</li>
+            <li>Late Fee: ₹500</li>
+            <li>Installment Option</li>
+            <li>Grace Period: 15 Days</li>
+          </ul>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-lg font-bold text-blue-800 mb-4">Support Services</h3>
+          <ul class="space-y-2 text-gray-700">
+            <li>24/7 Tech Support</li>
+            <li>Fee Counseling</li>
+            <li>Payment Help</li>
+            <li>Account Recovery</li>
+            <li>Receipt Verification</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portal Features -->
+  <section id="features" class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-blue-900 mb-12">Portal Features</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+          <div class="text-5xl mb-4">💳</div>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Secure Payments</h3>
+          <p class="text-gray-700">Multiple payment options including cards, net banking, and digital wallets with bank-level security.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+          <div class="text-5xl mb-4">📊</div>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Fee Dashboard</h3>
+          <p class="text-gray-700">View detailed fee structure, payment history, pending dues, and download receipts.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+          <div class="text-5xl mb-4">📱</div>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Mobile Friendly</h3>
+          <p class="text-gray-700">Access the portal from any device – desktop, tablet, or mobile phone.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+          <div class="text-5xl mb-4">🔔</div>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Notifications</h3>
+          <p class="text-gray-700">Receive reminders for due dates, confirmations, and announcements via email and SMS.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+          <div class="text-5xl mb-4">📄</div>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Digital Receipts</h3>
+          <p class="text-gray-700">Instant receipts and the ability to download official fee payment certificates.</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+          <div class="text-5xl mb-4">📞</div>
+          <h3 class="text-xl font-bold text-blue-900 mb-2">Help Center</h3>
+          <p class="text-gray-700">Contact us via phone, email, or campus visit during office hours (9 AM–4 PM).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section with Slideshow -->
+  <section id="contact" class="bg-blue-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Contact Details -->
+      <div class="bg-blue-900 text-white p-8 rounded-lg shadow-md">
+        <h3 class="text-2xl font-semibold mb-6">📍 Get in Touch</h3>
+        <p class="font-bold">Address:</p>
+        <p>Springfield University<br>123 Education Street<br>Springfield, State 12345</p>
+        <p class="mt-4 font-bold">Phone:</p>
+        <p>Fee Portal: +1 (555) 123-4567<br>General: +1 (555) 123-4568</p>
+        <p class="mt-4 font-bold">Email:</p>
+        <p>fees@springfield.edu<br>support@springfield.edu</p>
+        <p class="mt-4 font-bold">Office Hours:</p>
+        <p>Mon–Fri: 9:00 AM – 6:00 PM<br>Sat: 10:00 AM – 2:00 PM</p>
+      </div>
+
+      <!-- Slideshow Section -->
+      <div class="bg-gray-100 p-8 rounded-lg shadow-md" x-data="{ currentSlide: 0, slides: ['data:image/jpeg;base64,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', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKRSt8y6wmtueI0ly-yGLqQaWpmlvQmBv9Xw&s','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5a3fUXPsB0FpssJVZxwFF1dxbNwBBvGYe9g&s','https://th-i.thgim.com/public/incoming/8xtjp4/article66982931.ece/alternates/FREE_1200/Coimbatore%20district%20library%203.jpg', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-tjOnA9ipDBNhySSfq7unDsnP9KaEarmSmg&s'] }">
+        <h3 class="text-2xl font-semibold text-blue-900 mb-6 text-center">🏫 Our Campus Gallery</h3>
+        <div class="relative w-full h-64 overflow-hidden rounded-lg">
+          <template x-for="(slide, index) in slides" :key="index">
+            <img x-show="currentSlide === index" :src="slide" class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500">
+          </template>
+        </div>
+        <div class="flex justify-between items-center mt-4">
+          <button @click="currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1"
+            class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">← Prev</button>
+          <button @click="currentSlide = (currentSlide + 1) % slides.length"
+            class="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 transition">Next →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center text-gray-600 text-sm py-4">
+    © 2025 College Fee Portal. All rights reserved.
+  </footer>
+
+  <!-- Alpine.js for Slideshow -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</body>
+</html>
+

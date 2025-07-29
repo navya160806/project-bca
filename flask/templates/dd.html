@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accountant Dashboard - Fee Portal</title>
+  <style>
+    :root {
+      --sidebar-bg: #1f2937;
+      --sidebar-text: #ffffff;
+      --main-bg: #f3f4f6;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: var(--main-bg);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background-color: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      padding: 1.5rem 1rem;
+    }
+
+    .sidebar h2 {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: #60a5fa;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      color: var(--sidebar-text);
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+
+    .nav-link:hover {
+      background-color: #374151;
+    }
+
+    /* Main Content */
+    .main {
+      flex-grow: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .dashboard-header {
+      font-size: 1.75rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      color: #1e3a8a;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      flex: 1 1 250px;
+    }
+
+    .card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .card p {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .bifurcation {
+      margin-top: 2rem;
+    }
+
+    .bifurcation table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      box-shadow: var(--shadow);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .bifurcation th, .bifurcation td {
+      padding: 1rem;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+
+    .bifurcation th {
+      background-color: #eff6ff;
+      color: #1e40af;
+    }
+
+    .bifurcation tr:last-child td {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h2>Accountant</h2>
+    <a href="#" class="nav-link">Dashboard</a>
+    <a href="#" class="nav-link">Fee Collection</a>
+    <a href="#" class="nav-link">Student Reports</a>
+    <a href="#" class="nav-link">Defaulters</a>
+    <a href="#" class="nav-link">Add Payment</a>
+    <a href="#" class="nav-link">Logout</a>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="dashboard-header">Fee Portal Dashboard</div>
+
+    <!-- Cards -->
+    <div class="card-container">
+      <div class="card">
+        <h3>Total Fees Collected</h3>
+        <p>₹25,40,000</p>
+      </div>
+      <div class="card">
+        <h3>Total Students Paid</h3>
+        <p>820</p>
+      </div>
+      <div class="card">
+        <h3>Pending Payments</h3>
+        <p>₹4,60,000</p>
+      </div>
+      <div class="card">
+        <h3>Defaulters</h3>
+        <p>65 Students</p>
+      </div>
+    </div>
+
+    <!-- Fee Bifurcation -->
+    <div class="bifurcation">
+      <h3 style="margin: 1.5rem 0; color:#1e3a8a; font-size:1.3rem;">Fee Bifurcation</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Amount (₹)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Tuition Fee</td>
+            <td>₹15,00,000</td>
+          </tr>
+          <tr>
+            <td>Hostel Fee</td>
+            <td>₹5,00,000</td>
+          </tr>
+          <tr>
+            <td>Library Fee</td>
+            <td>₹2,00,000</td>
+          </tr>
+          <tr>
+            <td>Exam Fee</td>
+            <td>₹1,00,000</td>
+          </tr>
+          <tr>
+            <td>Miscellaneous</td>
+            <td>₹40,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+</body>
+</html>
