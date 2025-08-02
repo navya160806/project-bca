@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fee Records - Accountant View</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fafb;
+    }
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+    }
+  </style>
+</head>
+<body class="p-8">
+
+ <!-- Full-width Header Strip -->
+<!-- Full-width Header Strip (Styled to match your screenshot) -->
+<!-- Full-width Gradient Header -->
+
+
+   <header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <i class="fas fa-university text-3xl"></i>
+        <div>
+          <h1 class="text-2xl font-bold">Global Institute of Engineering and Technology</h1>
+          <p class="text-sm">Accountant Fee Management Panel</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-sm">Logged in as</p>
+        <p class="font-semibold">Admin ID: ACC12345</p>
+      </div>
+    </div>
+  </header>
+
+
+<!-- Section Title + Dashboard Button with spacing -->
+<section class="flex justify-between items-center mt-10 mb-6 px-2 md:px-0">
+  <h2 class="text-2xl font-bold text-gray-800">Search Student Fees</h2>
+  <a href="/dashboard" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+    Back to Dashboard
+  </a>
+</section>
+
+  <!-- Search Section -->
+  <form method="GET" action="/fee_view" class="mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+      <input type="text" name="name" value="{{ request.args.get('name', '') }}" placeholder="Search by Name" class="search-input px-4 py-2 border border-gray-300 rounded w-full">
+      <input type="number" name="min" value="{{ request.args.get('min', '') }}" placeholder="Min Amount" class="search-input px-4 py-2 border border-gray-300 rounded w-full">
+      <input type="number" name="max" value="{{ request.args.get('max', '') }}" placeholder="Max Amount" class="search-input px-4 py-2 border border-gray-300 rounded w-full">
+      <select name="status" class="search-input px-4 py-2 border border-gray-300 rounded w-full">
+        <option value="">Any Status</option>
+        <option value="Paid" {% if request.args.get('status') == 'Paid' %}selected{% endif %}>Paid</option>
+        <option value="Unpaid" {% if request.args.get('status') == 'Unpaid' %}selected{% endif %}>Unpaid</option>
+      </select>
+      <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition w-full">Search</button>
+    </div>
+  </form>
+
+  <!-- Table -->
+  <div class="bg-white p-6 rounded shadow overflow-x-auto">
+    <table class="w-full table-auto border border-gray-200 rounded-lg overflow-hidden">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-4 py-2 text-left">Student Name</th>
+          <th class="px-4 py-2 text-left">Roll No</th>
+          <th class="px-4 py-2 text-left">Class</th>
+          <th class="px-4 py-2 text-left">Fee Types</th>
+          <th class="px-4 py-2 text-left">Total Amount</th>
+          <th class="px-4 py-2 text-left">Status</th>
+          <th class="px-4 py-2 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-sm divide-y divide-gray-200">
+        {% for fee in records %}
+        <tr class="hover:bg-gray-50">
+          <td class="px-4 py-2">{{ fee.student_name }}</td>
+          <td class="px-4 py-2">{{ fee.roll_no }}</td>
+          <td class="px-4 py-2">{{ fee.student_class }}</td>
+          <td class="px-4 py-2">
+            <ul class="list-disc ml-5">
+              {% for f in fee.fee_types %}
+              <li>{{ f }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="px-4 py-2">₹{{ "%.2f"|format(fee.total_amount) }}</td>
+          <td class="px-4 py-2">
+            {% if 'Paid' in fee.status and fee.status|length == 1 %}
+              <span class="text-green-700 bg-green-100 px-2 py-1 rounded text-xs">Paid</span>
+            {% elif 'Unpaid' in fee.status and fee.status|length == 1 %}
+              <span class="text-red-700 bg-red-100 px-2 py-1 rounded text-xs">Unpaid</span>
+            {% else %}
+              <span class="text-red-700 bg-red-100 px-2 py-1 rounded text-xs">Partial/Unpaid</span>
+            {% endif %}
+          </td>
+          <td class="px-4 py-2">
+            <div class="flex gap-2 flex-wrap">
+              <form action="{{ url_for('edit_student', roll_no=fee.roll_no) }}" method="get">
+
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs">Edit</button>
+              </form>
+              <form action="/delete_student/{{ fee.roll_no }}" method="post" onsubmit="return confirm('Delete all records for this student?');">
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs">Delete</button>
+              </form>
+              {% if 'Paid' in fee.status %}
+              <a href="{{ url_for('receipt_by_roll', roll_no=fee.roll_no) }}" target="_blank">
+                <button type="button" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs">Receipt</button>
+              </a>
+              {% endif %}
+            </div>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="7" class="text-center px-4 py-6 text-gray-500">No records found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

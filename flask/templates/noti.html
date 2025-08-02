@@ -8,48 +8,69 @@
 </head>
 <body class="bg-gray-100 min-h-screen">
 
-  <!-- Sticky Header -->
-  <header class="bg-indigo-700 text-white py-4 shadow-md sticky top-0 z-10">
-    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Reminder Sender</h1>
-      <span class="text-sm opacity-80">Excellence University | Accounts Dept.</span>
+  <!-- Header -->
+   <header class="bg-gradient-to-r from-blue-700 to-indigo-700 text-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <i class="fas fa-university text-3xl"></i>
+        <div>
+          <h1 class="text-2xl font-bold">Global Institute of Engineering and Technology</h1>
+          <p class="text-sm">Accountant Fee Management Panel</p>
+        </div>
+      </div>
+      <div class="text-right">
+        <p class="text-sm">Logged in as</p>
+        <p class="font-semibold">Admin ID: ACC12345</p>
+      </div>
     </div>
   </header>
 
-  <!-- Page Title -->
+  <div class="max-w-7xl mx-auto mt-4 px-4 flex justify-end">
+  <a href="{{ url_for('dashboard') }}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+    Back to Dashboard
+  </a>
+</div>
+
+
+  <!-- Title -->
   <div class="max-w-4xl mx-auto mt-6 px-4">
     <h2 class="text-3xl font-bold text-indigo-700 mb-2">Fee Reminder Dashboard</h2>
-    <p class="text-gray-600">Send notifications to students who haven't paid their fees.</p>
+    <p class="text-gray-600">Send notifications to students who haven't paid their full fees.</p>
   </div>
 
-  <!-- Main Section -->
+  <!-- Reminder Panel -->
   <div class="max-w-4xl mx-auto bg-white p-6 mt-4 rounded-lg shadow-md px-4">
 
-    <!-- Select Student -->
+    <!-- Student Dropdown -->
     <div class="mb-4">
       <label class="block text-sm font-medium text-gray-700 mb-2">Select Student</label>
       <select id="studentSelect" class="w-full px-4 py-2 border rounded-lg">
         <option value="" disabled selected>Select student</option>
-        <option value="John Doe" data-email="john.doe@example.com">John Doe - EU1001</option>
-        <option value="Aditi Sharma" data-email="aditi.sharma@example.com">Aditi Sharma - EU1023</option>
-        <option value="Raj Patel" data-email="raj.patel@example.com">Raj Patel - EU1055</option>
-        <option value="Priya Verma" data-email="priya.verma@example.com">Priya Verma - EU1099</option>
+        {% for student in defaulters %}
+        <option 
+          value="{{ student.student_name }}" 
+          data-email="{{ student.email }}" 
+          data-roll="{{ student.roll_no }}"
+          data-categories="{{ student.categories | join(', ') }}">
+          {{ student.student_name }} - {{ student.roll_no }}
+        </option>
+        {% endfor %}
       </select>
     </div>
 
-    <!-- Student Email -->
+    <!-- Email -->
     <div class="mb-4">
       <label class="block text-sm font-medium text-gray-700 mb-2">Student Email</label>
-      <input type="email" id="studentEmail" class="w-full px-4 py-2 border rounded-lg" placeholder="student@example.com" readonly />
+      <input type="email" id="studentEmail" class="w-full px-4 py-2 border rounded-lg" readonly />
     </div>
 
-    <!-- Message Box -->
+    <!-- Message -->
     <div>
       <label class="block text-sm font-medium text-gray-700 mb-2">Reminder Message</label>
       <textarea id="messageBox" rows="5" class="w-full border px-4 py-2 rounded-lg" readonly></textarea>
     </div>
 
-    <!-- Send Button -->
+    <!-- Button -->
     <div class="mt-4 flex justify-between items-center">
       <button onclick="sendReminder()" class="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
         Send Reminder
@@ -67,28 +88,44 @@
     studentSelect.addEventListener('change', function () {
       const selectedOption = this.options[this.selectedIndex];
       const name = selectedOption.value;
+      const roll = selectedOption.getAttribute('data-roll');
       const email = selectedOption.getAttribute('data-email');
+      const categories = selectedOption.getAttribute('data-categories');
+
+      studentEmail.value = email || '';
 
       messageBox.value =
-        `Dear ${name},\nThis is a reminder that your fee payment is still pending.\nPlease complete the payment at the earliest to avoid penalties.\n\nRegards,\nAccounts Department`;
-      
-      studentEmail.value = email || '';
+        `Dear ${name},\nThis is a reminder that your payment is pending for the following categories: ${categories}.\n` +
+        `Roll No: ${roll}.\nPlease complete the payment at the earliest to avoid penalties.\n\nRegards,\nAccounts Department`;
     });
 
-    function sendReminder() {
-      if (!studentSelect.value || !studentEmail.value) {
-        alert("Please select a student and ensure the email is filled.");
-        return;
-      }
-      // Simulate sending message
+   function sendReminder() {
+  const selectedOption = studentSelect.options[studentSelect.selectedIndex];
+  const roll = selectedOption.getAttribute('data-roll');
+
+  if (!studentSelect.value || !studentEmail.value) {
+    alert("Please select a student.");
+    return;
+  }
+
+  fetch('/send_reminder', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'roll_no=' + encodeURIComponent(roll)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
       statusMessage.classList.remove('hidden');
-      setTimeout(() => {
-        statusMessage.classList.add('hidden');
-      }, 3000);
+      selectedOption.remove();  // Remove from dropdown
+      setTimeout(() => statusMessage.classList.add('hidden'), 3000);
     }
+  });
+}
+
   </script>
 
 </body>
 </html>
-
-

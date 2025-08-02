@@ -31,123 +31,121 @@
     </div>
   </header>
 
-  <!-- Form Card -->
+  <!-- Back Button -->
+  <div class="max-w-7xl mx-auto mt-4 px-4 flex justify-end">
+    <a href="{{ url_for('dashboard') }}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition text-sm">
+      Back to Dashboard
+    </a>
+  </div>
+
+  <!-- Form -->
   <main class="max-w-3xl mx-auto mt-10 bg-white rounded-xl shadow-lg p-8 space-y-6">
     <h2 class="text-2xl font-semibold text-blue-700 flex items-center gap-2 mb-4">
       <i class="fas fa-file-invoice-dollar text-blue-600"></i>
       Student Fee Collection Form
     </h2>
 
-    <!-- Form -->
-    <form class="space-y-6" id="feeForm">
-      <!-- Student Info -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="p-3 bg-green-100 text-green-800 rounded">
+          {% for category, message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
       <div class="grid md:grid-cols-2 gap-4">
         <div>
           <label class="block text-sm font-medium mb-1">Student Name</label>
-          <input type="text" class="w-full border rounded-lg px-4 py-2" placeholder="Deepika Singh" />
+          <input type="text" name="student_name" class="w-full border rounded-lg px-4 py-2" required />
         </div>
         <div>
           <label class="block text-sm font-medium mb-1">Student ID</label>
-          <input type="text" class="w-full border rounded-lg px-4 py-2" placeholder="EU2025001" />
+          <input type="text" name="roll_no" class="w-full border rounded-lg px-4 py-2" required />
         </div>
       </div>
 
       <div class="grid md:grid-cols-2 gap-4">
         <div>
           <label class="block text-sm font-medium mb-1">Course</label>
-          <input type="text" class="w-full border rounded-lg px-4 py-2" placeholder="BCA" />
+          <input type="text" name="student_class" class="w-full border rounded-lg px-4 py-2" required />
         </div>
         <div>
-          <label class="block text-sm font-medium mb-1">Semester</label>
-          <select class="w-full border rounded-lg px-4 py-2">
-            <option>Semester 1</option>
-            <option>Semester 2</option>
-            <option>Semester 3</option>
-            <option>Semester 4</option>
-            <option>Semester 5</option>
-            <option>Semester 6</option>
-          </select>
+          <label class="block text-sm font-medium mb-1">Email</label>
+          <input type="email" name="email" class="w-full border rounded-lg px-4 py-2" placeholder="student@gmail.com"
+                 required pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
+                 title="Email must end with @gmail.com" />
         </div>
       </div>
 
-      <!-- Fee Categories -->
       <div>
-        <label class="block text-sm font-semibold mb-2">Select Fee Categories:</label>
+        <label class="block text-sm font-semibold mb-2">Fee Categories</label>
         <div class="grid grid-cols-2 gap-3 text-sm">
           <label class="flex items-center gap-2">
-            <input type="checkbox" id="semCheck" onchange="toggleFeeInput('sem')">
-            Semester Fee
+            <input type="checkbox" name="categories" value="Semester"> Semester Fee
           </label>
+          <input type="number" name="Semester" class="w-full border rounded px-2 py-1" placeholder="Amount in ₹">
+
           <label class="flex items-center gap-2">
-            <input type="checkbox" id="hostelCheck" onchange="toggleFeeInput('hostel')">
-            Hostel Fee
+            <input type="checkbox" name="categories" value="Hostel"> Hostel Fee
           </label>
+          <input type="number" name="Hostel" class="w-full border rounded px-2 py-1" placeholder="Amount in ₹">
+
           <label class="flex items-center gap-2">
-            <input type="checkbox" id="transportCheck" onchange="toggleFeeInput('transport')">
-            Transport Fee
+            <input type="checkbox" name="categories" value="Transport"> Transport Fee
           </label>
+          <input type="number" name="Transport" class="w-full border rounded px-2 py-1" placeholder="Amount in ₹">
+
           <label class="flex items-center gap-2">
-            <input type="checkbox" id="otherCheck" onchange="toggleFeeInput('other')">
-            Other Charges
+            <input type="checkbox" name="categories" value="Other"> Other Charges
           </label>
+          <input type="number" name="Other" class="w-full border rounded px-2 py-1" placeholder="Amount in ₹">
         </div>
       </div>
 
-      <!-- Fee Inputs -->
-      <div id="semInput" class="hidden">
-        <label class="block text-sm mt-3 mb-1">Semester Fee (₹)</label>
-        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 120000" />
-      </div>
-
-      <div id="hostelInput" class="hidden">
-        <label class="block text-sm mt-3 mb-1">Hostel Fee (₹)</label>
-        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 60000" />
-      </div>
-
-      <div id="transportInput" class="hidden">
-        <label class="block text-sm mt-3 mb-1">Transport Fee (₹)</label>
-        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 30000" />
-      </div>
-
-      <div id="otherInput" class="hidden">
-        <label class="block text-sm mt-3 mb-1">Other Charges (₹)</label>
-        <input type="number" class="w-full border px-4 py-2 rounded-lg" placeholder="e.g. 1500" />
-      </div>
-
-      <!-- Payment Method -->
       <div>
-        <label class="block text-sm font-medium mb-1">Payment Method</label>
-        <select class="w-full border rounded-lg px-4 py-2">
-          <option>Cash</option>
-          <option>Credit / Debit Card</option>
-          <option>UPI</option>
-          <option>Bank Transfer</option>
+        <label class="block text-sm font-medium mb-1">Fee Status</label>
+        <select name="fee_status" class="w-full border rounded-lg px-4 py-2" required>
+          <option value="Paid">Paid</option>
+          <option value="Unpaid">Unpaid</option>
         </select>
       </div>
 
-      <!-- Submit Button -->
       <div class="text-right">
-        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 hover:scale-105 transition-transform duration-300 shadow">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
           <i class="fas fa-check-circle mr-2"></i> Submit Payment
         </button>
       </div>
     </form>
   </main>
 
-  <!-- Footer -->
   <footer class="text-center text-sm text-gray-500 mt-10 py-6">
     &copy; 2025 Global Institute of Engineering and Technology — Fee Module for Accountants
   </footer>
 
-  <!-- JS: Toggle fee inputs -->
+  <!-- ✅ JS for auto-filling fee amounts -->
   <script>
-    function toggleFeeInput(type) {
-      const input = document.getElementById(type + 'Input');
-      const check = document.getElementById(type + 'Check');
-      input.classList.toggle('hidden', !check.checked);
-    }
-  </script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const feeMap = {
+        'Semester': 50000,
+        'Hostel': 30000,
+        'Transport': 15000,
+        'Other': 5000
+      };
 
+      Object.keys(feeMap).forEach(feeType => {
+        const checkbox = document.querySelector(`input[type="checkbox"][value="${feeType}"]`);
+        const input = document.querySelector(`input[name="${feeType}"]`);
+
+        if (checkbox && input) {
+          checkbox.addEventListener('change', () => {
+            input.value = checkbox.checked ? feeMap[feeType] : '';
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Fee Receipt</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans p-10">
+
+  <div id="receipt" class="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+    <h1 class="text-2xl font-bold text-center mb-2">Global Institute of Engineering and Technology</h1>
+    <h2 class="text-lg text-center font-semibold mb-6">Fee Receipt</h2>
+
+    <div class="mb-4 text-sm">
+      <p><strong>Student Name:</strong> {{ student.student_name }}</p>
+      <p><strong>Class:</strong> {{ student.student_class }}</p>
+      <p><strong>Roll No:</strong> {{ student.roll_no }}</p>
+      <p><strong>Email:</strong> {{ student.email }}</p>
+    </div>
+
+    <table class="w-full border mt-4 text-sm">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="border px-4 py-2 text-left">Fee Type</th>
+          <th class="border px-4 py-2 text-left">Amount (INR)</th>
+          <th class="border px-4 py-2 text-left">Status</th>
+          <th class="border px-4 py-2 text-left">Date of Payment</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rec in records %}
+        <tr>
+          <td class="border px-4 py-2">{{ rec.fee_category }}</td>
+          <td class="border px-4 py-2">₹{{ '{:.2f}'.format(rec.fee_amount) }}</td>
+          <td class="border px-4 py-2 text-green-600">{{ rec.fee_status }}</td>
+          <td class="border px-4 py-2">{{ rec.fee_date.strftime('%Y-%m-%d') }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr class="bg-gray-50 font-semibold">
+          <td colspan="1" class="border px-4 py-2 text-right">Total Paid:</td>
+          <td class="border px-4 py-2">₹{{ '{:.2f}'.format(total_amount) }}</td>
+          <td colspan="2" class="border px-4 py-2"></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <p class="mt-6 text-sm text-gray-500 text-center">This is a system-generated receipt. No signature required.</p>
+  </div>
+
+  <div class="flex justify-center mt-6">
+    <button id="downloadBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded text-sm">
+      Download PDF
+    </button>
+  </div>
+
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const receipt = document.getElementById("receipt");
+      html2pdf().from(receipt).save("Receipt_{{ student.roll_no }}.pdf");
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Student Fee Records</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-10">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-2xl font-bold mb-4">Edit Fee Records for {{ student.student_name }} ({{ student.roll_no }})</h2>
+    <form method="POST">
+      <input type="hidden" name="roll_no" value="{{ student.roll_no }}">
+
+      <!-- Student Info (Non-editable) -->
+      <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium">Student Name</label>
+          <input type="text" name="student_name" value="{{ student.student_name }}" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Class</label>
+          <input type="text" name="student_class" value="{{ student.student_class }}" class="w-full border px-3 py-2 rounded" required>
+        </div>
+        <div>
+          <label class="block text-sm font-medium">Email</label>
+          <input type="email" name="email" value="{{ student.email }}" class="w-full border px-3 py-2 rounded" required>
+        </div>
+      </div>
+
+      <hr class="my-4">
+
+      <!-- Fee Records -->
+      <h3 class="text-lg font-semibold mb-2">Fee Categories</h3>
+      {% for record in records %}
+      <div class="mb-4 border rounded p-4">
+        <input type="hidden" name="ids" value="{{ record.id }}">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium">Fee Category</label>
+            <input type="text" name="fee_category_{{ record.id }}" value="{{ record.fee_category }}" class="w-full border px-3 py-2 rounded" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Amount</label>
+            <input type="number" name="fee_amount_{{ record.id }}" value="{{ record.fee_amount }}" class="w-full border px-3 py-2 rounded" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium">Status</label>
+            <select name="fee_status_{{ record.id }}" class="w-full border px-3 py-2 rounded">
+              <option value="Paid" {% if record.fee_status == 'Paid' %}selected{% endif %}>Paid</option>
+              <option value="Unpaid" {% if record.fee_status == 'Unpaid' %}selected{% endif %}>Unpaid</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="mt-6">
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Save Changes</button>
+        <a href="{{ url_for('fee_view') }}" class="ml-4 text-gray-600 hover:underline">Cancel</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
