@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fee Collection</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 py-10">
+  <div class="max-w-4xl mx-auto bg-white p-8 rounded shadow-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">Fee Payment Form</h2>
+
+    <form method="POST">
+      <!-- STUDENT DETAILS -->
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1">Student Name</label>
+          <input type="text" name="student_name" class="w-full border rounded p-2" required>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Class</label>
+          <input type="text" name="student_class" class="w-full border rounded p-2" required>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Roll No</label>
+          <input type="text" name="roll_no" class="w-full border rounded p-2" required>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Email</label>
+          <input type="email" name="email" class="w-full border rounded p-2" required>
+        </div>
+      </div>
+
+      <!-- SEMESTER SELECTION -->
+      <div class="mt-6">
+        <label class="block font-semibold mb-1">Select Semester</label>
+        <select id="semester" class="border p-2 w-full rounded" required>
+          <option value="">Select Semester</option>
+          <option value="1">1st</option>
+          <option value="2">2nd</option>
+          <option value="3">3rd</option>
+          <option value="4">4th</option>
+          <option value="5">5th</option>
+          <option value="6">6th</option>
+          <option value="7">7th</option>
+          <option value="8">8th</option>
+        </select>
+      </div>
+
+      <!-- DUE AND PAYMENT DATE -->
+      <div class="mt-6 grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1">Due Date</label>
+          <input type="date" name="due_date" id="due_date" class="border p-2 w-full rounded" required>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1">Payment Date</label>
+          <input type="date" name="payment_date" id="payment_date" class="border p-2 w-full rounded" required>
+        </div>
+      </div>
+
+      <!-- FEE SELECTION SECTION -->
+      <div class="mt-6">
+        <label class="block font-semibold mb-2">Select Fee Categories</label>
+
+        <div class="space-y-3">
+          <!-- Semester Fee -->
+          <div class="border rounded p-3">
+            <label class="font-semibold">
+              <input type="checkbox" name="categories" value="Semester Fee" class="mr-2 category">
+              Semester Fee
+            </label>
+            <div class="ml-6 mt-2 space-y-2">
+              <input type="number" name="Semester Fee" id="sem_fee" class="border p-2 w-full rounded bg-gray-100" placeholder="Base Fee" readonly>
+              <input type="number" id="sem_late" class="border p-2 w-full rounded bg-gray-100" placeholder="Late Fee" readonly>
+            </div>
+          </div>
+
+          <!-- Hostel Fee -->
+          <div class="border rounded p-3">
+            <label class="font-semibold">
+              <input type="checkbox" name="categories" value="Hostel Fee" class="mr-2 category">
+              Hostel Fee
+            </label>
+            <div class="ml-6 mt-2 space-y-2">
+              <input type="number" name="Hostel Fee" id="hostel_fee" class="border p-2 w-full rounded bg-gray-100" placeholder="Base Fee" readonly>
+              <input type="number" id="hostel_late" class="border p-2 w-full rounded bg-gray-100" placeholder="Late Fee" readonly>
+            </div>
+          </div>
+
+          <!-- Transport Fee -->
+          <div class="border rounded p-3">
+            <label class="font-semibold">
+              <input type="checkbox" name="categories" value="Transport Fee" class="mr-2 category">
+              Transport Fee
+            </label>
+            <div class="ml-6 mt-2 space-y-2">
+              <input type="number" name="Transport Fee" id="transport_fee" class="border p-2 w-full rounded bg-gray-100" placeholder="Base Fee" readonly>
+              <input type="number" id="transport_late" class="border p-2 w-full rounded bg-gray-100" placeholder="Late Fee" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TOTAL DISPLAY -->
+      <div class="mt-6 grid grid-cols-2 gap-4">
+        <div>
+          <label class="block font-semibold mb-1 text-red-600">Total Late Fee</label>
+          <input type="number" id="total_late" class="border p-2 w-full rounded bg-gray-100" readonly>
+        </div>
+        <div>
+          <label class="block font-semibold mb-1 text-green-600">Total Payable Amount</label>
+          <input type="number" id="grand_total" class="border p-2 w-full rounded bg-gray-100" readonly>
+        </div>
+      </div>
+
+      <!-- STATUS -->
+      <div class="mt-6">
+        <label class="block font-semibold mb-1">Fee Status</label>
+        <select name="fee_status" class="border p-2 w-full rounded">
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+        </select>
+      </div>
+
+      <button type="submit" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const semester = document.getElementById('semester');
+    const dueDate = document.getElementById('due_date');
+    const paymentDate = document.getElementById('payment_date');
+
+    const feeStructure = {
+      "Semester Fee": {1: 30000, 2: 32000, 3: 34000, 4: 36000, 5: 38000, 6: 40000, 7: 42000, 8: 44000},
+      "Hostel Fee": {1: 25000, 2: 26000, 3: 27000, 4: 28000, 5: 29000, 6: 30000, 7: 31000, 8: 32000},
+      "Transport Fee": {1: 10000, 2: 11000, 3: 12000, 4: 13000, 5: 14000, 6: 15000, 7: 16000, 8: 17000}
+    };
+
+    const categories = document.querySelectorAll('.category');
+    const inputs = {
+      "Semester Fee": {base: document.getElementById('sem_fee'), late: document.getElementById('sem_late')},
+      "Hostel Fee": {base: document.getElementById('hostel_fee'), late: document.getElementById('hostel_late')},
+      "Transport Fee": {base: document.getElementById('transport_fee'), late: document.getElementById('transport_late')}
+    };
+
+    const totalLate = document.getElementById('total_late');
+    const grandTotal = document.getElementById('grand_total');
+
+    function updateFees() {
+      const sem = semester.value;
+      let total = 0;
+      let lateTotal = 0;
+
+      categories.forEach(cb => {
+        const cat = cb.value;
+        const baseInput = inputs[cat].base;
+        const lateInput = inputs[cat].late;
+
+        if (cb.checked && sem) {
+          baseInput.value = feeStructure[cat][sem];
+          const daysLate = calculateDaysLate();
+          const lateFee = daysLate * 500;
+          lateInput.value = lateFee;
+          total += feeStructure[cat][sem] + lateFee;
+          lateTotal += lateFee;
+        } else {
+          baseInput.value = '';
+          lateInput.value = '';
+        }
+      });
+
+      totalLate.value = lateTotal;
+      grandTotal.value = total;
+    }
+
+    function calculateDaysLate() {
+      if (dueDate.value && paymentDate.value) {
+        const due = new Date(dueDate.value);
+        const pay = new Date(paymentDate.value);
+        const diffDays = Math.max(0, Math.ceil((pay - due) / (1000 * 60 * 60 * 24)));
+        return diffDays;
+      }
+      return 0;
+    }
+
+    semester.addEventListener('change', updateFees);
+    dueDate.addEventListener('change', updateFees);
+    paymentDate.addEventListener('change', updateFees);
+    categories.forEach(cb => cb.addEventListener('change', updateFees));
+  </script>
+</body>
+</html>
